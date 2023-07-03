@@ -1,2 +1,1 @@
 <h1 align ="center">AirBnB clone</h1><br>
-<img src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2018/6/815046647d23428a14ca.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20230703%2Feu-west-3%2Fs3%2Faws4_request&amp;X-Amz-Date=20230703T224116Z&amp;X-Amz-Expires=86400&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=059106310e8b1af8041a817717f46b1850d4061b5970d7921fd9199c35608a6c" alt="" loading="lazy" style="">

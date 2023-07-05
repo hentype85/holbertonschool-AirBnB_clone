@@ -17,23 +17,30 @@ class BaseModel():
         por lo que recorto todo ese string, guardando solo lo que queremos.
         """
         self.id = str(uuid.uuid1())
-        self.created_at = (datetime.now())[10:]
-        self.updated_at = self.created_at
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
     def __str__(self):
-        """Hago el str segun lo piden, lo unico que me llega a chocar es
-        lo de BaseModel, pero solo en el caso de hacerlo padre o abuelo
-        por si herda no de problemas.
+        """Hago el str segun el formato que piden.
         Returns:
-            str: Lo que pide el ejercicio.git
+            str: Lo que pide el ejercicio
         """
-        return "[{}] ({}) <{}>".format(self.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
         """Actualiza el valor de updated al valor actual del datetime
         """
-        self.updated_at = str(datetime.now())[10:]
+        self.updated_at = datetime.now()
 
     def to_dict(self):
-        self.update({'__class__': self.__class__})
-        return self.__dict__
+        """Cambia el tipo de created_at y updated_at a un tipo serializado
+
+        Returns:
+            dict: Return the modified __dict__
+        """
+        new_dict = self.__dict__
+        new_dict.update({'__class__': self.__class__.__name__})
+        new_dict.update({'updated_at': self.updated_at.isoformat()})
+        new_dict.update({'created_at': self.created_at.isoformat()})
+        return new_dict

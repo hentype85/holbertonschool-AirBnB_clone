@@ -17,6 +17,18 @@ class Test_Base_Model(unittest.TestCase):
         self.assertTrue(hasattr(self.my_model, 'created_at'))
         self.assertTrue(hasattr(self.my_model, 'updated_at'))
 
+    def test_kwargs(self):
+        """test kwargs
+        """
+        my_new_model = BaseModel(**self.my_model.to_dict())
+        self.assertNotEqual(my_new_model, self.my_model)
+        self.assertEqual(my_new_model.id, self.my_model.id)
+        self.assertEqual(my_new_model.created_at, self.my_model.created_at)
+        self.assertEqual(my_new_model.updated_at, self.my_model.updated_at)
+        self.assertEqual(my_new_model.__class__, self.my_model.__class__)
+        self.assertEqual(my_new_model.name, self.my_model.name)
+        self.assertEqual(my_new_model.my_number, self.my_model.my_number)
+
     def test_set_name(self):
         """test set name
         """

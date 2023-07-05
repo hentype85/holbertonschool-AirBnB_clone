@@ -13,8 +13,8 @@ class BaseModel():
         strtimeFormat = "%Y-%m-%dT%H:%M:%S.%f"
         if len(kwargs) != 0:
             for k, v in kwargs.items():
-                if k != "__class__":
-                    setattr(self, k, v)
+                if k == "__class__":
+                    continue
                 if k == "created_at" or k == "updated_at":
                     setattr(self, k, datetime.strptime(v, strtimeFormat))
                 else:

@@ -1,6 +1,6 @@
 <h1 align ="center">AirBnB clone</h1><br>
 <p align="center">
-  <img width="300" height="400" src="https://www.aydentownsley.com/img/hbnb.png">
+  <img width="400" height="300" src="https://www.aydentownsley.com/img/hbnb.png">
 </p>
 
 ```

@@ -1,13 +1,12 @@
 #!/usr/bin/python3
-"""BaseModel
-"""
-from datetime import datetime
+"""class BaseModel"""
+
 import uuid
+from datetime import datetime
 
 
 class BaseModel():
-    """BaseModel
-    """
+    """BaseModel"""
 
     def __init__(self):
         """Es solo el init, cuando creo el objeto le creo una id unica con

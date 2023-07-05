@@ -1,24 +1,27 @@
 #!/usr/bin/python3
-"""BaseModel
-"""
-from datetime import datetime
+"""class BaseModel"""
 import uuid
+from datetime import datetime
 
 
 class BaseModel():
-    """BaseModel
-    """
+    """BaseModel"""
 
-    def __init__(self):
-        """Es solo el init, cuando creo el objeto le creo una id unica con
-        uuid.uuid1, luego le asigno tambien un valor para cundo se crea.
-        El [10:] es para recortar la cantidad de caracteres, ya que
-        datetime.now() me retorna la fecha y ademas los segundos exactos,
-        por lo que recorto todo ese string, guardando solo lo que queremos.
-        """
-        self.id = str(uuid.uuid1())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    def __init__(self, *args, **kwargs):
+        """initialize attributes"""
+        strtimeFormat = "%Y-%m-%dT%H:%M:%S.%f"
+        if len(kwargs) != 0:
+            for k, v in kwargs.items():
+                if k == "created_at" or k == "updated_at":
+                    setattr(self, k, datetime.strptime(v, strtimeFormat))
+                elif k != '__class__':
+                    setattr(self, k, v)
+                else:
+                    self.__class__.__name__ = v
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """Hago el str segun el formato que piden.

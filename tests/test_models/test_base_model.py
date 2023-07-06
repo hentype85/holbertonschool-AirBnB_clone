@@ -11,6 +11,8 @@ class Test_Base_Model(unittest.TestCase):
     """
 
     def test_all_empty(self):
+        """test all empty
+        """
         self.assertAlmostEqual(storage.all(), "{}")
 
     def create_class(self):

@@ -32,9 +32,6 @@ class FileStorage():
         """deserializes the JSON file to __objects"""
         if os.path.exists(FileStorage.__file_path):
             with open(self.__file_path, "r") as fd:
-                data = fd.read()
-                if data:
-                    data = json.loads(data)
-                    for k, v in data.items():
-                        v = BaseModel(**v)
-                        self.__objects[k] = v
+                for k, v in (json.loads(fd.read())).items():
+                    v = BaseModel(**v)
+                    self.__objects[k] = v

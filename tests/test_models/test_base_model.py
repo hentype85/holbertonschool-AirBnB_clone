@@ -2,12 +2,16 @@
 """Son todos los test que se me ocurrieron para probar el base model
 """
 import unittest
+from models import storage
 from models.base_model import BaseModel
 
 
 class Test_Base_Model(unittest.TestCase):
     """Son todos los test que se me ocurrieron para probar el base model
     """
+
+    def test_all_empty(self):
+        self.assertAlmostEqual(storage.all(), "{}")
 
     def create_class(self):
         """create class

@@ -24,6 +24,7 @@ class BaseModel():
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """Hago el str segun el formato que piden.
@@ -37,6 +38,7 @@ class BaseModel():
         """Actualiza el valor de updated al valor actual del datetime
         """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """Cambia el tipo de created_at y updated_at a un tipo serializado

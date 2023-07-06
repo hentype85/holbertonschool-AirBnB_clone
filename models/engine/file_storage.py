@@ -3,7 +3,7 @@
 
 import json
 import os
-
+from models.base_model import BaseModel
 
 class FileStorage():
     """class that serializes instances to a JSON
@@ -19,21 +19,20 @@ class FileStorage():
         """sets __objects the obj with key"""
         k = obj.__class__.__name__ + "." + obj.__dict__["id"]
         self.__objects[k] = obj
-
+    
     def save(self):
         """serializes __objects to the JSON file"""
         dictionary = {}
         for k, v in self.__objects.items():
             dictionary[k] = v.to_dict()
         with open(self.__file_path, "w") as fd:
-            fd.write(json.dumps(dictionary))
+            json.dump(dictionary, fd)
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        if not os.path.exists(self.__file_path):
+        if not os.path.exists(FileStorage.__file_path):
             return
         else:
             with open(self.__file_path, "r") as fd:
-                new_dict = json.load(fd)
-            for k, v in new_dict.items():
-                self.__objects[k] = eval(v["__class__"])(**v)
+                for k, v in json.load(fd).items():
+                    self.__objects[k] = eval(v["__class__"])(**v)

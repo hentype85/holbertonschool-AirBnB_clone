@@ -35,7 +35,7 @@ class FileStorage():
                 file = fd.read()
                 if file:
                     file = json.load(file)
-                    for k, v in file.items():
-                        self.__objects[k] = eval(v["__class__"])(**v)
+                for k, v in file.items():
+                    self.__objects[k] = eval(v["__class__"])(**v)
         except FileNotFoundError:
             pass

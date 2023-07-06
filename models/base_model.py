@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """class BaseModel"""
 import uuid
+import json
 from datetime import datetime
 
 
@@ -46,4 +47,7 @@ class BaseModel():
         new_dict.update({'__class__': self.__class__.__name__})
         new_dict.update({'updated_at': self.updated_at.isoformat()})
         new_dict.update({'created_at': self.created_at.isoformat()})
+        filename = "file.json"
+        with open(filename, 'w') as file:
+            file.write(json.dumps(new_dict))
         return new_dict

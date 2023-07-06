@@ -36,4 +36,5 @@ class FileStorage():
                 if data:
                     data = json.loads(data)
                     for k, v in data.items():
-                        self.__objects[k] = eval(v["__class__"])(**v)
+                        v = BaseModel(**v)
+                        self.__objects[k] = v

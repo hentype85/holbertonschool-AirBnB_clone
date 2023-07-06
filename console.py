@@ -1,10 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
+"""AirBnB console"""
 
 import cmd
 
 
 class HBNBCommand(cmd.Cmd):
-    """AirBnB console"""
+    """class console"""
 
     prompt = "(hbnb) "
 

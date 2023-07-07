@@ -2,6 +2,7 @@
 """AirBnB console"""
 
 import cmd
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -19,8 +20,21 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """ empty line"""
+        """empty line"""
         pass
+
+    def do_create(self, args):
+        """ Create a new instance of BaseModel,
+            saves it (to the JSON file) and prints the id
+        """
+        if len(args) == 0:
+            print("** class name missing **")
+        try:
+            new = eval(args)()
+            new.save()
+            print(new.id)
+        except Exception:
+            print("** class doesn't exist **")
 
 
 if __name__ == "__main__":

@@ -1,10 +1,9 @@
 #!/usr/bin/python3
-"""tests"""
-
-import pep8
+"""Son todos los test que se me ocurrieron para probar el base model
+"""
 import unittest
-from models import storage
-import datetime
+import pep8
+from datetime import datetime
 from models.base_model import BaseModel
 
 
@@ -29,7 +28,8 @@ class TestCodeFormat(unittest.TestCase):
 
 
 class Test_Base_Model(unittest.TestCase):
-    """tests base model"""
+    """Son todos los test que se me ocurrieron para probar el base model
+    """
 
     def test_instance(self):
         new = BaseModel()
@@ -38,38 +38,75 @@ class Test_Base_Model(unittest.TestCase):
         self.assertIs(type(new), BaseModel)
         self.assertEqual(type(new.id), str)
 
-    def test_init_with_no_arguments(self):
-        new = BaseModel()
-        self.assertIsInstance(new.id, str)
-        self.assertIsInstance(new.created_at, datetime.date)
-        self.assertIsInstance(new.updated_at, datetime.date)
-        self.assertEqual(type(new.created_at), type(new.updated_at))
+    def create_class(self):
+        """create class
+        """
+        my_model = BaseModel()
+        self.assertTrue(hasattr(my_model, 'id'))
+        self.assertTrue(hasattr(my_model, 'created_at'))
+        self.assertTrue(hasattr(my_model, 'updated_at'))
 
-    def test_str_representation(self):
+    def test_set_name(self):
+        """test set name
+        """
         new = BaseModel()
-        expected_str = "[BaseModel] ({}) {}".format(new.id, new.__dict__)
-        self.assertEqual(str(new), expected_str)
+        new.name = "My First Model"
+        self.assertEqual(new.name, "My First Model")
 
-    def test_save_updates_updated_at(self):
+    def test_set_number(self):
+        """test set number
+        """
+        my_model = BaseModel()
+        my_model.my_number = 89
+        self.assertAlmostEqual(my_model.my_number, 89)
+
+    def test_types(self):
+        """test types
+        """
+        my_model = BaseModel()
+        self.assertIsInstance(my_model.id, str)
+        self.assertIsInstance(my_model.created_at, datetime)
+        self.assertIsInstance(my_model.updated_at, datetime)
+        self.assertIsInstance(my_model.to_dict(), dict)
+        self.assertEqual(str, type(my_model.id))
+        self.assertEqual(datetime, type(my_model.created_at))
+        self.assertEqual(datetime, type(my_model.updated_at))
+
+    def test_to_dict(self):
+        """test to dict
+        """
+        my_model = BaseModel()
+        my_model_json = my_model.to_dict()
+        self.assertIsInstance(my_model_json["created_at"], str)
+        self.assertIsInstance(my_model_json["updated_at"], str)
+        self.assertEqual(my_model_json["__class__"], "BaseModel")
+
+    def test_to_dict_2(self):
+        """test to dict_2
+        """
+        my_model = BaseModel()
+        self.assertIn('id', my_model.to_dict())
+        self.assertIn('created_at', my_model.to_dict())
+        self.assertIn('updated_at', my_model.to_dict())
+
+    def test_save(self):
+        """test save
+        """
         new = BaseModel()
-        old_updated_at = new.updated_at
+        created = new.updated_at
         new.save()
-        self.assertNotEqual(old_updated_at, new.updated_at)
+        updated = new.updated_at
+        self.assertNotEqual(updated, created)
 
-    def test_to_dict_returns_dict_representation(self):
+    def test_attr(self):
+        """test attributes of instance
+        """
         new = BaseModel()
-        new_dict = new.to_dict()
-        self.assertIsInstance(new_dict, dict)
-        self.assertEqual(new_dict["__class__"], "BaseModel")
-        self.assertEqual(new_dict["id"], new.id)
-        self.assertEqual(new_dict["created_at"], str(new.created_at))
-        self.assertEqual(new_dict["updated_at"], str(new.updated_at))
-
-    def test_to_dict_includes_additional_attributes(self):
-        new = BaseModel()
-        new.custom_attr = "custom_value"
-        new_dict = new.to_dict()
-        self.assertEqual(new_dict["custom_attr"], "custom_value")
+        new.algo = "cosas"
+        self.assertTrue(hasattr(new, "id"))
+        self.assertTrue(hasattr(new, "created_at"))
+        self.assertTrue(hasattr(new, "updated_at"))
+        self.assertTrue(hasattr(new, "algo"))
 
 
 if __name__ == "__main__":

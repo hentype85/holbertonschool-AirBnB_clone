@@ -45,7 +45,7 @@ class BaseModel():
         Returns:
             dict: Return the modified __dict__
         """
-        new_dictionary = self.__dict__
+        new_dictionary = self.__dict__.copy()
         new_dictionary["__class__"] = self.__class__.__name__
         new_dictionary["created_at"] = self.created_at.isoformat()
         new_dictionary["updated_at"] = self.updated_at.isoformat()

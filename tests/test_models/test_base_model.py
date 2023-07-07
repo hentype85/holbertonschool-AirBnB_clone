@@ -68,6 +68,9 @@ class Test_Base_Model(unittest.TestCase):
         self.assertIsInstance(my_model.created_at, datetime)
         self.assertIsInstance(my_model.updated_at, datetime)
         self.assertIsInstance(my_model.to_dict(), dict)
+        self.assertEqual(str, type(my_model.id))
+        self.assertEqual(datetime, type(my_model.created_at))
+        self.assertEqual(datetime, type(my_model.updated_at))
 
     def test_to_dict(self):
         """test to dict

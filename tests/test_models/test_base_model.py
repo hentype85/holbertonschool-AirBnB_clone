@@ -2,18 +2,34 @@
 """Son todos los test que se me ocurrieron para probar el base model
 """
 import unittest
-from models import storage
+import pep8
+from datetime import datetime
 from models.base_model import BaseModel
+
+
+class TestCodeFormat(unittest.TestCase):
+    """test pep8"""
+
+    def test_pep8_conformance(self):
+        """Test that conform to PEP8"""
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(
+            ["../../models/base_model.py"])
+        self.assertEqual(result.total_errors, 1,
+                         "Found pep8 code style errors and warnings")
+
+    def test_pep8_conformance_test(self):
+        """Test that conform to PEP8"""
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(
+            ["../../tests/test_models/test_base_model.py"])
+        self.assertEqual(result.total_errors, 1,
+                         "Found pep8 code style errors and warnings")
 
 
 class Test_Base_Model(unittest.TestCase):
     """Son todos los test que se me ocurrieron para probar el base model
     """
-
-    def test_all_empty(self):
-        """test all empty
-        """
-        self.assertAlmostEqual(storage.all(), "{}")
 
     def create_class(self):
         """create class

@@ -14,11 +14,9 @@ class BaseModel():
         strtimeFormat = "%Y-%m-%dT%H:%M:%S.%f"
         if len(kwargs) != 0:
             for k, v in kwargs.items():
-                if k == "__class__":
-                    continue
                 if k == "created_at" or k == "updated_at":
                     setattr(self, k, datetime.strptime(v, strtimeFormat))
-                else:
+                elif k != "__class__":
                     setattr(self, k, v)
         else:
             self.id = str(uuid.uuid4())
@@ -45,7 +43,7 @@ class BaseModel():
         Returns:
             dict: Return the modified __dict__
         """
-        new_dictionary = self.__dict__
+        new_dictionary = self.__dict__.copy()
         new_dictionary["__class__"] = self.__class__.__name__
         new_dictionary["created_at"] = self.created_at.isoformat()
         new_dictionary["updated_at"] = self.updated_at.isoformat()

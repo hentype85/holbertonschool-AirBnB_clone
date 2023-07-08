@@ -4,6 +4,7 @@
 import json
 import os
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage():
@@ -31,10 +32,9 @@ class FileStorage():
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        if not os.path.exists(FileStorage.__file_path):
+        if not os.path.exists(self.__file_path):
             return
         else:
             with open(self.__file_path, "r") as fd:
                 for k, v in json.load(fd).items():
                     self.__objects[k] = eval(v["__class__"])(**v)
-    

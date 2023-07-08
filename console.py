@@ -46,15 +46,13 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
         else:
-            list_args_splitted = args.split(" ")
-            if list_args_splitted[0] not in self.all_classes:
+            list_args = args.split(" ")
+            if list_args[0] not in self.all_classes:
                 print("** class doesn't exist **")
-            if len(list_args_splitted) < 2:
+            if len(list_args) < 2:
                 print("** instance id missing **")
             else:
-                class_name = list_args_splitted[0]
-                class_id = list_args_splitted[1]
-                key = "{}.{}".format(class_name, class_id)
+                key = "{}.{}".format(list_args[0], list_args[1])
                 try:
                     print(storage.all()[key])
                 except Exception:
@@ -66,21 +64,71 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
         else:
-            list_args_splitted = args.split(" ")
-            if list_args_splitted[0] not in self.all_classes:
+            list_args = args.split(" ")
+            if list_args[0] not in self.all_classes:
                 print("** class doesn't exist **")
-            if len(list_args_splitted) < 2:
+            if len(list_args) < 2:
                 print("** instance id missing **")
             else:
                 try:
-                    class_name = list_args_splitted[0]
-                    class_id = list_args_splitted[1]
-                    key = "{}.{}".format(class_name, class_id)
+                    key = "{}.{}".format(list_args[0], list_args[1])
                     del storage.all()[key]
                     storage.save()
                 except Exception:
                     print("** no instance found **")
 
+    def do_all(self, args):
+        """ Prints all string representation of all instances
+            based or not on the class name"""
+        list_args = args.split()
+        dict_objs = storage.all()
+        new_list = []
+        if len(list_args) > 0:
+            if list_args[0] not in self.all_classes:
+                print("** class doesn't exist **")
+            else:
+                for k, v in dict_objs.items():
+                    if list_args[0] == v.__class__.__name__:
+                        new_list.append(str(v))
+        else:
+            for k, v in dict_objs.items():
+                new_list.append(str(v))
+        if len(new_list) != 0:
+            print(new_list)
+
+    def do_update(self, args):
+        """Updates an instance and save JSON file)"""
+        list_args = args.split()
+
+        if len(list_args) == 0:
+            print("** class name missing **")
+        elif list_args[0] not in self.all_classes:
+            print("** class doesn't exist **")
+        elif len(list_args) == 1:
+            print("** instance id missing **")
+        elif len(list_args) == 2:
+            print("** attribute name missing **")
+        elif len(list_args) == 3:
+            print("** value missing **")
+        else:
+            key = list_args[0] + "." + list_args[1]
+
+            if key in storage.all():
+                instance = storage.all()[key]
+                attr_name = list_args[2]
+                attr_value = list_args[3].strip('"')
+                if attr_name in instance.__dict__:
+                    instance_type = type(instance.__dict__[attr_name])
+                    casted_value = instance_type(attr_value)
+                    setattr(instance, attr_name, casted_value)
+                    instance.save()
+                else:
+                    setattr(instance, attr_name, attr_value)
+                    instance.save()
+            else:
+                print("** no instance found **")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
+

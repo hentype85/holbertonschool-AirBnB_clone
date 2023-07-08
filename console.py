@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
                     setattr(instance, attr_name, attr_value)
                     instance.save()
             else:
-                print("** no se encontró la instancia **")
+                print("** no instance found **")
 
 
 if __name__ == "__main__":

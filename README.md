@@ -4,19 +4,19 @@
 </p>
 
 ## Description of the project
-A command interpreter to manipulate data without a visual interface,
+A command interpreter to manipulate data without a visual interface,  
 like in a Shell (perfect for development and debugging)
 
 ## All tests should also pass in non-interactive mode
 ```
-interactive mode: python3 -m unittest discover tests
+interactive mode: python3 -m unittest discover tests  
 non intercative mode: echo "python3 -m unittest discover tests" | bash
 ```
 
 ## How to use the console
-Options: EOF  all  create  destroy  help  quit  show  update
-non-interactive mode: echo "help" | ./console.py
-interactive mode: ./console.py
+Options: EOF - all - create - destroy - help - quit - show - update  
+non-interactive mode: echo "help" | ./console.py  
+interactive mode: ./console.py  
 
 ## Example of usage
 ```

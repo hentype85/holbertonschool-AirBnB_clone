@@ -130,9 +130,7 @@ class HBNBCommand(cmd.Cmd):
                 attr_name = list_args[2]
                 attr_value = list_args[3].strip('"')
                 if attr_name in instance.__dict__:
-                    instance_type = type(instance.__dict__[attr_name])
-                    casted_value = instance_type(attr_value)
-                    setattr(instance, attr_name, casted_value)
+                    setattr(instance, attr_name, attr_value)
                     instance.save()
                 else:
                     new_dict = {attr_name: attr_value}

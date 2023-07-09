@@ -4,11 +4,11 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.state import State
 from models import storage
 
 
@@ -61,15 +61,14 @@ class HBNBCommand(cmd.Cmd):
             list_args = args.split(" ")
             if list_args[0] not in self.all_classes:
                 print("** class doesn't exist **")
+            if len(list_args) < 2:
+                print("** instance id missing **")
             else:
-                if len(list_args) < 2:
-                    print("** instance id missing **")
-                else:
-                    key = "{}.{}".format(list_args[0], list_args[1])
-                    try:
-                        print(storage.all()[key])
-                    except Exception:
-                        print("** no instance found **")
+                key = "{}.{}".format(list_args[0], list_args[1])
+                try:
+                    print(storage.all()[key])
+                except Exception:
+                    print("** no instance found **")
 
     def do_destroy(self, args):
         """ Deletes an instance based on the class name and id
@@ -80,16 +79,15 @@ class HBNBCommand(cmd.Cmd):
             list_args = args.split(" ")
             if list_args[0] not in self.all_classes:
                 print("** class doesn't exist **")
+            if len(list_args) < 2:
+                print("** instance id missing **")
             else:
-                if len(list_args) < 2:
-                    print("** instance id missing **")
-                else:
-                    try:
-                        key = "{}.{}".format(list_args[0], list_args[1])
-                        del storage.all()[key]
-                        storage.save()
-                    except Exception:
-                        print("** no instance found **")
+                try:
+                    key = "{}.{}".format(list_args[0], list_args[1])
+                    del storage.all()[key]
+                    storage.save()
+                except Exception:
+                    print("** no instance found **")
 
     def do_all(self, args):
         """ Prints all string representation of all instances
@@ -130,19 +128,15 @@ class HBNBCommand(cmd.Cmd):
             attr_name = list_args[2]
             attr_value = list_args[3].strip('"')
 
-            instance_data_type = type(instance.__dict__[attr_name])
-            casted_value = instance_data_type(attr_value)
-
             if key in storage.all():
                 if attr_name in instance.__dict__:
-                    setattr(instance, attr_name, casted_value)
-                    instance.save()
+                    setattr(instance, attr_name, attr_value)
                 else:
-                    new_dict = {attr_name: casted_value}
+                    new_dict = {attr_name: attr_value}
                     new_dict.update(instance.__dict__)
                     instance.__dict__.clear()
                     instance.__dict__.update(new_dict)
-                    instance.save()
+                instance.save()
             else:
                 print("** no instance found **")
 

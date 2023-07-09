@@ -4,11 +4,11 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
-from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+from models.state import State
 from models import storage
 
 
@@ -45,6 +45,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if len(args) == 0:
             print("** class name missing **")
+            return
         try:
             new = eval(args)()
             new.save()
@@ -57,12 +58,15 @@ class HBNBCommand(cmd.Cmd):
             instance based on the class name and id"""
         if len(args) == 0:
             print("** class name missing **")
+            return
         else:
             list_args = args.split(" ")
             if list_args[0] not in self.all_classes:
                 print("** class doesn't exist **")
+                return
             if len(list_args) < 2:
                 print("** instance id missing **")
+                return
             else:
                 key = "{}.{}".format(list_args[0], list_args[1])
                 try:
@@ -75,12 +79,15 @@ class HBNBCommand(cmd.Cmd):
             (save the change into the JSON file)"""
         if len(args) == 0:
             print("** class name missing **")
+            return
         else:
             list_args = args.split(" ")
             if list_args[0] not in self.all_classes:
                 print("** class doesn't exist **")
+                return
             if len(list_args) < 2:
                 print("** instance id missing **")
+                return
             else:
                 try:
                     key = "{}.{}".format(list_args[0], list_args[1])
@@ -114,14 +121,19 @@ class HBNBCommand(cmd.Cmd):
 
         if len(list_args) == 0:
             print("** class name missing **")
+            return
         elif list_args[0] not in self.all_classes:
             print("** class doesn't exist **")
+            return
         elif len(list_args) == 1:
             print("** instance id missing **")
+            return
         elif len(list_args) == 2:
             print("** attribute name missing **")
+            return
         elif len(list_args) == 3:
             print("** value missing **")
+            return
         else:
             key = list_args[0] + "." + list_args[1]
 
@@ -140,6 +152,7 @@ class HBNBCommand(cmd.Cmd):
                     instance.save()
             else:
                 print("** no instance found **")
+                return
 
 
 if __name__ == "__main__":

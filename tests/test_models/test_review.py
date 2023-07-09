@@ -7,7 +7,7 @@ from models.review import Review
 from models.base_model import BaseModel
 
 
-class TestUser(unittest.TestCase):
+class TestReview(unittest.TestCase):
     """ Tests for Review Class"""
 
     def test_review_attributes(self):

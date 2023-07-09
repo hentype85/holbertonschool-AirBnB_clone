@@ -124,19 +124,21 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             key = list_args[0] + "." + list_args[1]
-            instance = storage.all()[key]
-            attr_name = list_args[2]
-            attr_value = list_args[3].strip('"')
 
             if key in storage.all():
+                instance = storage.all()[key]
+                attr_name = list_args[2]
+                attr_value = list_args[3].strip('"')
+
                 if attr_name in instance.__dict__:
                     setattr(instance, attr_name, attr_value)
+                    instance.save()
                 else:
                     new_dict = {attr_name: attr_value}
                     new_dict.update(instance.__dict__)
                     instance.__dict__.clear()
                     instance.__dict__.update(new_dict)
-                instance.save()
+                    instance.save()
             else:
                 print("** no instance found **")
 

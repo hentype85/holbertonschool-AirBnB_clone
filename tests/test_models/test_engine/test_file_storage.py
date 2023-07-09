@@ -17,7 +17,7 @@ class TestCodeFormat(unittest.TestCase):
         """Test that conform to PEP8"""
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files(
-            ["../../models/base_model.py"])
+            ["../../models/engine/file_storage.py"])
         self.assertEqual(result.total_errors, 1,
                          "Found pep8 code style errors and warnings")
 
@@ -25,7 +25,7 @@ class TestCodeFormat(unittest.TestCase):
         """Test that conform to PEP8"""
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files(
-            ["../../tests/test_models/test_base_model.py"])
+            ["../../tests/test_models/test_engine/test_file_storage.py"])
         self.assertEqual(result.total_errors, 1,
                          "Found pep8 code style errors and warnings")
 
@@ -95,7 +95,8 @@ class TestFileStorage(unittest.TestCase):
         with open(self.path, "r") as file:
             data = json.load(file)
         data["BaseModel.111111"] = {"id": "111111",
-                                    "__class__": "BaseModel", "name": "my_model",
+                                    "__class__": "BaseModel",
+                                    "name": "my_model",
                                     "created_at": "2023-07-06T14:21:32.911051",
                                     "updated_at": "2023-07-06T14:21:32.911057"}
         with open(self.path, "w") as file:
@@ -115,6 +116,41 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(len(my_json), 2)
         for k in my_json.keys():
             self.assertTrue(isinstance(my_json[k], BaseModel))
+
+    def test_reload_file_not_exists(self):
+        """
+        Test reload when the JSON file does not exist
+        """
+        self.remove()
+        self.storage.reload()
+        self.assertAlmostEqual(len(self.storage.all()), 0)
+
+    def test_reload_empty_file(self):
+        """
+        Test reload when the JSON file is empty
+        """
+        with open(self.path, "w") as file:
+            file.write("")
+        self.storage.reload()
+        self.assertAlmostEqual(len(self.storage.all()), 0)
+
+    def test_reload_invalid_json(self):
+        """
+        Test reload when the JSON file contains invalid JSON
+        """
+        with open(self.path, "w") as file:
+            file.write("{invalid_json}")
+        self.storage.reload()
+        self.assertAlmostEqual(len(self.storage.all()), 0)
+
+    def test_save_no_permission(self):
+        """
+        Test save when there is no write permission to the JSON file
+        """
+        os.chmod(self.path, 0o444)
+        my_model = BaseModel()
+        self.storage.new(my_model)
+        self.storage.save()
 
 
 if __name__ == "__main__":

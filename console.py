@@ -61,14 +61,15 @@ class HBNBCommand(cmd.Cmd):
             list_args = args.split(" ")
             if list_args[0] not in self.all_classes:
                 print("** class doesn't exist **")
-            if len(list_args) < 2:
-                print("** instance id missing **")
             else:
-                key = "{}.{}".format(list_args[0], list_args[1])
-                try:
-                    print(storage.all()[key])
-                except Exception:
-                    print("** no instance found **")
+                if len(list_args) < 2:
+                    print("** instance id missing **")
+                else:
+                    key = "{}.{}".format(list_args[0], list_args[1])
+                    try:
+                        print(storage.all()[key])
+                    except Exception:
+                        print("** no instance found **")
 
     def do_destroy(self, args):
         """ Deletes an instance based on the class name and id
@@ -79,15 +80,16 @@ class HBNBCommand(cmd.Cmd):
             list_args = args.split(" ")
             if list_args[0] not in self.all_classes:
                 print("** class doesn't exist **")
-            if len(list_args) < 2:
-                print("** instance id missing **")
             else:
-                try:
-                    key = "{}.{}".format(list_args[0], list_args[1])
-                    del storage.all()[key]
-                    storage.save()
-                except Exception:
-                    print("** no instance found **")
+                if len(list_args) < 2:
+                    print("** instance id missing **")
+                else:
+                    try:
+                        key = "{}.{}".format(list_args[0], list_args[1])
+                        del storage.all()[key]
+                        storage.save()
+                    except Exception:
+                        print("** no instance found **")
 
     def do_all(self, args):
         """ Prints all string representation of all instances

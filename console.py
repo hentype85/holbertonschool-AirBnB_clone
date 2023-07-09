@@ -129,7 +129,6 @@ class HBNBCommand(cmd.Cmd):
                 instance = storage.all()[key]
                 attr_name = list_args[2]
                 attr_value = list_args[3].strip('"')
-
                 if attr_name in instance.__dict__:
                     setattr(instance, attr_name, attr_value)
                     instance.save()

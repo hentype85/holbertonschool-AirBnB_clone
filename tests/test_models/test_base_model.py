@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Son todos los test que se me ocurrieron para probar el base model
+""" Test for Base_Model and pep8
 """
 import unittest
 import pep8
@@ -8,10 +8,10 @@ from models.base_model import BaseModel
 
 
 class TestCodeFormat(unittest.TestCase):
-    """test pep8"""
+    """ Test pep8"""
 
     def test_pep8_conformance(self):
-        """Test that conform to PEP8"""
+        """ Test that conform to PEP8"""
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files(
             ["../../models/base_model.py"])
@@ -19,7 +19,7 @@ class TestCodeFormat(unittest.TestCase):
                          "Found pep8 code style errors and warnings")
 
     def test_pep8_conformance_test(self):
-        """Test that conform to PEP8"""
+        """ Test that conform to PEP8"""
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files(
             ["../../tests/test_models/test_base_model.py"])
@@ -28,10 +28,12 @@ class TestCodeFormat(unittest.TestCase):
 
 
 class Test_Base_Model(unittest.TestCase):
-    """Son todos los test que se me ocurrieron para probar el base model
+    """ Test for Base_Model
     """
 
     def test_instance(self):
+        """ Test instances
+        """
         new = BaseModel()
         self.assertIsInstance(new, BaseModel)
         self.assertEqual(issubclass(new.__class__, BaseModel), True)
@@ -39,7 +41,7 @@ class Test_Base_Model(unittest.TestCase):
         self.assertEqual(type(new.id), str)
 
     def create_class(self):
-        """create class
+        """ Create class
         """
         my_model = BaseModel()
         self.assertTrue(hasattr(my_model, 'id'))
@@ -47,21 +49,21 @@ class Test_Base_Model(unittest.TestCase):
         self.assertTrue(hasattr(my_model, 'updated_at'))
 
     def test_set_name(self):
-        """test set name
+        """ Test set name
         """
         new = BaseModel()
         new.name = "My First Model"
         self.assertEqual(new.name, "My First Model")
 
     def test_set_number(self):
-        """test set number
+        """ Test set number
         """
         my_model = BaseModel()
         my_model.my_number = 89
         self.assertAlmostEqual(my_model.my_number, 89)
 
     def test_types(self):
-        """test types
+        """ Test types
         """
         my_model = BaseModel()
         self.assertIsInstance(my_model.id, str)
@@ -73,7 +75,7 @@ class Test_Base_Model(unittest.TestCase):
         self.assertEqual(datetime, type(my_model.updated_at))
 
     def test_to_dict(self):
-        """test to dict
+        """ Test to dict
         """
         my_model = BaseModel()
         my_model_json = my_model.to_dict()
@@ -82,7 +84,7 @@ class Test_Base_Model(unittest.TestCase):
         self.assertEqual(my_model_json["__class__"], "BaseModel")
 
     def test_to_dict_2(self):
-        """test to dict_2
+        """ Test to dict_2
         """
         my_model = BaseModel()
         self.assertIn('id', my_model.to_dict())
@@ -90,7 +92,7 @@ class Test_Base_Model(unittest.TestCase):
         self.assertIn('updated_at', my_model.to_dict())
 
     def test_save(self):
-        """test save
+        """ Test save
         """
         new = BaseModel()
         created = new.updated_at
@@ -99,7 +101,7 @@ class Test_Base_Model(unittest.TestCase):
         self.assertNotEqual(updated, created)
 
     def test_attr(self):
-        """test attributes of instance
+        """ Test attributes of instance
         """
         new = BaseModel()
         new.algo = "cosas"

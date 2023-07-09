@@ -124,9 +124,9 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             key = list_args[0] + "." + list_args[1]
-            instance = storage.all()[key]
 
             if key in storage.all():
+                instance = storage.all()[key]
                 attr_name = list_args[2]
                 attr_value = list_args[3].strip('"')
 

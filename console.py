@@ -4,11 +4,11 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
-from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+from models.state import State
 from models import storage
 
 
@@ -129,21 +129,15 @@ class HBNBCommand(cmd.Cmd):
                 instance = storage.all()[key]
                 attr_name = list_args[2]
                 attr_value = list_args[3].strip('"')
-
                 if attr_name in instance.__dict__:
-                    instance_type = type(instance.__dict__[attr_name])
-                    casted_value = instance_type(attr_value)
-                    setattr(instance, attr_name, casted_value)
+                    setattr(instance, attr_name, attr_value)
                     instance.save()
                 else:
-                    setattr(instance, attr_name, attr_value)
-                    """
                     new_dict = {attr_name: attr_value}
                     new_dict.update(instance.__dict__)
                     instance.__dict__.clear()
                     instance.__dict__.update(new_dict)
                     instance.save()
-                    """
             else:
                 print("** no instance found **")
 

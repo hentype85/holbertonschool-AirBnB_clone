@@ -30,7 +30,8 @@ class TestState(unittest.TestCase):
 
     def test_str_method(self):
         """Test the __str__ method"""
-        expected_str = "[State] ({}) {}".format(self.state.id, self.state.__dict__)
+        expected_str = "[State] ({}) {}".format(
+            self.state.id, self.state.__dict__)
         self.assertEqual(str(self.state), expected_str)
 
     def test_save_method(self):
@@ -38,6 +39,7 @@ class TestState(unittest.TestCase):
         old_updated_at = self.state.updated_at
         self.state.save()
         self.assertNotEqual(self.state.updated_at, old_updated_at)
+
 
 if __name__ == "__main__":
     unittest.main()

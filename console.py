@@ -136,11 +136,14 @@ class HBNBCommand(cmd.Cmd):
                     setattr(instance, attr_name, casted_value)
                     instance.save()
                 else:
+                    setattr(instance, attr_name, attr_value)
+                    """
                     new_dict = {attr_name: attr_value}
                     new_dict.update(instance.__dict__)
                     instance.__dict__.clear()
                     instance.__dict__.update(new_dict)
                     instance.save()
+                    """
             else:
                 print("** no instance found **")
 

@@ -62,7 +62,6 @@ button:hover {
 	visibility: hidden;
 }
 
-
 .locations:hover .popover{
 	visibility: visible;
 }

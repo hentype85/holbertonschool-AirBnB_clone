@@ -4,7 +4,7 @@
 </p>
 <br>
 <p align="center">
-  <img width="840" height="370" src="img/diag.png">
+  <img width="840" height="470" src="img/diag.png">
 </p>
 
 ## Description of the project
